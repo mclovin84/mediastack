@@ -39,7 +39,7 @@ List of Docker applications configured in the MediaStack `docker-compose.yaml` f
 | [Postgresql](https://hub.docker.com/_/postgres) | PostgreSQL is a powerful, open-source relational database system known for reliability and advanced features |  
 | [Prometheus](https://prometheus.io/docs/introduction/overview/) | Prometheus is an open-source monitoring system that collects and queries metrics using a time-series database |  
 | [Prowlarr](https://docs.linuxserver.io/images/docker-prowlarr) | Prowlarr manages and integrates indexers for various media download applications, automating search and download processes |  
-| [qBittorrent](https://docs.linuxserver.io/images/docker-qbittorrent) | qBittorrent is a peer-to-peer file sharing application that facilitates downloading and uploading torrents |  
+ 
 | [Radarr](https://docs.linuxserver.io/images/docker-radarr) | Radarr is a Library Manager, automating the management and meta data for your Movie media files |  
 | [Readarr](https://docs.linuxserver.io/images/docker-readarr) | is a Library Manager, automating the management and meta data for your eBooks and Comic media files |  
 | [SABnzbd](https://docs.linuxserver.io/images/docker-sabnzbd) | SABnzbd is a Usenet newsreader that automates the downloading of binary files from Usenet |  
@@ -98,7 +98,7 @@ Port forward your incoming connections on your home Internet gateway / router, t
 
   - **full-download-vpn:** The `docker-compose.yaml` file located in this directory is configured so all outgoing network connections / media downloads are protected with the Gluetun VPN Tunnel, to provide maximum privacy on your Internet connection. **This is the recommended configuration for new users**.  
 
-  - **mini-download-vpn:** The `docker-compose.yaml` file located in this directory is configured so only the SABnzbd (Usenet) and qBittorrent (Torrents) are protected with the Gluetun VPN Tunnel, to provide a moderate level of privacy just on your download activities.  
+  
 
   - **no-download-vpn:** The `docker-compose.yaml` file located in this directory does not have Gluetun, or any other form of VPN for outgoing Internet traffic; you will have limited no privacy on downloads.  
 
@@ -133,7 +133,7 @@ flowchart TD
     Tdarr
     Huntarr
     SABnzbd
-    qBittorrent
+    
     Label@{ label: "<div style=\"color:\"><span style=\"color:\">IP Subnet: 172.28.10.0/24</span></div>" }
     NIC["Network Adapter"]
   end
@@ -151,8 +151,7 @@ flowchart TD
   Lidarr       Lidarr_Gluetun@      ---- Gluetun
   Tdarr        Tdarr_Gluetun@       ---  Gluetun
   Huntarr      Huntarr_Gluetun@     ---- Gluetun
-  SABnzbd      SABnzbd_Gluetun@     ---  Gluetun
-  qBittorrent  qBittorrent_Gluetun@ ---- Gluetun
+ 
   Gluetun      Gluetun_NIC@         ==> NIC
   NIC          NIC_Gateway@         ==> Gateway
   Gateway      Gateway_VPN@         ==> VPN
@@ -174,7 +173,7 @@ flowchart TD
   style Tdarr        stroke:#2962FF
   style Huntarr      stroke:#2962FF
   style SABnzbd      stroke:#2962FF
-  style qBittorrent  stroke:#2962FF
+  
   style Label        stroke:none
   style NIC          stroke:green,    stroke-width:2px
   style Gateway      stroke:green,    stroke-width:2px
@@ -213,7 +212,7 @@ flowchart TD
   Tdarr_Gluetun@{        animation: fast }
   Huntarr_Gluetun@{      animation: fast }
   SABnzbd_Gluetun@{      animation: fast }
-  qBittorrent_Gluetun@{  animation: fast }
+  
   Gluetun_NIC@{          animation: slow }
   NIC_Gateway@{          animation: slow }
   Gateway_VPN@{          animation: slow }
@@ -228,7 +227,7 @@ flowchart TD
 
 ## What is: "Mini Download VPN"
 
-This configuration set builds a minimal encrypted VPN network, soley for the Torrent and Usenet downloads for the qBittorrent and SABnzbd Docker containers, which route all network traffic through the Gluetun Docker container, where it is encrypted into a VPN before routing out to the Internet. All other Docker containers connect to the Docker bridge network (not Gluetun), and pass their network traffic directly out to the Internet though your Internet Service Provider. This approach ensures that only the Torrent and Usenet downloaded data is encrypted, while other containers operate with unencrypted traffic flows. The advantage here is that it maintains higher network performance for most applications, avoiding potential latency and bandwidth reductions associated with full encryption.  
+This configuration set builds a minimal encrypted VPN network, soley for the  and SABnzbd Docker containers, which route all network traffic through the Gluetun Docker container, where it is encrypted into a VPN before routing out to the Internet. All other Docker containers connect to the Docker bridge network (not Gluetun), and pass their network traffic directly out to the Internet though your Internet Service Provider. This approach ensures that only the and Usenet downloaded data is encrypted, while other containers operate with unencrypted traffic flows. The advantage here is that it maintains higher network performance for most applications, avoiding potential latency and bandwidth reductions associated with full encryption.  
 
 However, this comes at the cost of leaving some network traffic potentially exposed to interception or monitoring. This setup is suitable for users who require high performance for certain applications but still want to protect specific, sensitive download activities.  
 
@@ -253,7 +252,7 @@ flowchart TD
     Tdarr
     Huntarr
     SABnzbd
-    qBittorrent
+    
     Label@{ label: "<div style=\"color:\"><span style=\"color:\">IP Subnet: 172.28.10.0/24</span></div>" }
     NIC["Network Adapter"]
   end
@@ -272,7 +271,7 @@ flowchart TD
   Tdarr        Tdarr_NIC@           ---  NIC
   Huntarr      Huntarr_NIC@         ---- NIC
   SABnzbd      SABnzbd_Gluetun@     ---  Gluetun
-  qBittorrent  qBittorrent_Gluetun@ ---  Gluetun
+  
   Gluetun      Gluetun_NIC@         ==>  NIC
   NIC          NIC_Gateway_0@       ==>  Gateway
   NIC          NIC_Gateway_1@       ==>  Gateway
@@ -297,7 +296,7 @@ flowchart TD
   style Tdarr        stroke:#2962FF
   style Huntarr      stroke:#2962FF
   style SABnzbd      stroke:#2962FF
-  style qBittorrent  stroke:#2962FF
+ 
   style Label        stroke:none
   style NIC          stroke:green,    stroke-width:2px
   style Gateway      stroke:green,    stroke-width:2px
@@ -339,7 +338,7 @@ flowchart TD
   Tdarr_NIC@{            animation: fast }
   Huntarr_NIC@{          animation: fast }
   SABnzbd_Gluetun@{      animation: fast }
-  qBittorrent_Gluetun@{  animation: fast }
+ 
   Gluetun_NIC@{          animation: slow }
   NIC_Gateway_0@{        animation: slow }
   NIC_Gateway_1@{        animation: slow }
@@ -374,7 +373,7 @@ flowchart TD
     Tdarr
     Huntarr
     SABnzbd
-    qBittorrent
+   
     Label@{ label: "<div style=\"color:\"><span style=\"color:\">IP Subnet: 172.28.10.0/24</span></div>" }
     NIC["Network Adapter"]
   end
@@ -393,7 +392,7 @@ flowchart TD
   Tdarr        Tdarr_NIC@        ---  NIC
   Huntarr      Huntarr_NIC@      ---- NIC
   SABnzbd      SABnzbd_NIC@      ---  NIC
-  qBittorrent  qBittorrent_NIC@  ---- NIC
+  
   NIC          NIC_Gateway@      ==>  Gateway
   Gateway      Gateway_VPN@      ==>  Internet
   Gateway["Home Gateway"]
@@ -413,7 +412,7 @@ flowchart TD
   style Tdarr        stroke:#2962FF
   style Huntarr      stroke:#2962FF
   style SABnzbd      stroke:#2962FF
-  style qBittorrent  stroke:#2962FF
+  
   style Label        stroke:none
   style NIC          stroke:green,    stroke-width:2px
   style Gateway      stroke:green,    stroke-width:2px
@@ -451,7 +450,7 @@ flowchart TD
   Tdarr_NIC@{            animation: fast }
   Huntarr_NIC@{          animation: fast }
   SABnzbd_NIC@{          animation: fast }
-  qBittorrent_NIC@{      animation: fast }
+  
   NIC_Gateway@{          animation: slow }
   Gateway_VPN@{          animation: slow }
 ```
@@ -583,7 +582,7 @@ Understanding how to access the Docker applications within your own home network
 
 Imagine the following deployment scenario:  
 
-- **User 1** has deployed their Docker applications using the "**Mini Download VPN**" YAML files, so only the qBittorrent container is using the Gluetun VPN to encrypt network traffic to the Internet. Therefore, **User 1** accesses the **Jellyfin** application directly, with the URL of: **<http://jellyfin:8096>**.  
+- **User 1** has deployed their Docker applications using the "**Mini Download VPN**" YAML files, so only the  container is using the Gluetun VPN to encrypt network traffic to the Internet. Therefore, **User 1** accesses the **Jellyfin** application directly, with the URL of: **<http://jellyfin:8096>**.  
 
 - **User 2** has deployed their Docker applications using the "**Full Download VPN**" YAML files, which has all of the "Media Player" and "Downloading" Docker containers connecting to the Internet through the Gluetun VPN, encrypting all network traffic. Therefore, **User 2**  accesses the **Jellyfin** application by using the Gluetun container, which then uses port-redirection to forward the network traffic into Jellyfin. This URL will be: **<http://gluetun:8096>**.  
 
@@ -657,7 +656,7 @@ FOLDER_FOR_MEDIA=/your-media-folder       # Change to where you want your media 
 FOLDER_FOR_DATA=/your-app-configs         # Change to where you want your container configurations to be stored
 ```
 
-The **`FOLDER_FOR_MEDIA`** variable can be either Linux, Windows, MacOS, Synology, or NFS filesystems, and is the location for all of the **media storage, and transient download files** being used by the Bittorrent and Usenet applications. The filesystem mapping and directory structure between the Docker host computer, and the Docker applications, is shown in the folder structure below.  
+The **`FOLDER_FOR_MEDIA`** variable can be either Linux, Windows, MacOS, Synology, or NFS filesystems, and is the location for all of the **media storage, and transient download files** being used by the  and  The filesystem mapping and directory structure between the Docker host computer, and the Docker applications, is shown in the folder structure below.  
 
 The **`FOLDER_FOR_DATA`** variable can also be either Linux, Windows, MacOS, Synology, or NFS filesystems, and is the **configuration storage** for all of the Docker applications. Docker will store the running configuration of each of the Docker applications, into their own directory, inside the **`FOLDER_FOR_DATA`** directory.  
 
@@ -678,7 +677,7 @@ The **`restart.sh`** script will automatically create the directory structure be
     ⠀⠀⠀⠀⠀│⠀⠀⠀⠀├── photos                │⠀⠀⠀⠀├── photos      <-- N/A - Add Personal Photos
     ⠀⠀⠀⠀⠀│⠀⠀⠀⠀├── tv                    │⠀⠀⠀⠀├── tv          <-- Sonarr Media Library Manager
     ⠀⠀⠀⠀⠀│⠀⠀⠀⠀└── xxx                   │⠀⠀⠀⠀└── xxx         <-- Whisparr Media Library Manager
-    ⠀⠀⠀⠀⠀├── torrents               ⠀⠀⠀⠀├── torrents     <-- Folder for Torrent Downloads Data
+    ⠀⠀⠀⠀⠀├─
     ⠀⠀⠀⠀⠀│⠀⠀⠀⠀├── anime                 │⠀⠀⠀⠀├── anime       <-- Anime Category (Sonarr)
     ⠀⠀⠀⠀⠀│⠀⠀⠀⠀├── audio                 │⠀⠀⠀⠀├── audio       <-- Audio Category (Lidarr)
     ⠀⠀⠀⠀⠀│⠀⠀⠀⠀├── books                 │⠀⠀⠀⠀├── books       <-- Book Category (Readarr)
@@ -706,7 +705,7 @@ The **`restart.sh`** script will automatically create the directory structure be
     ⠀⠀⠀⠀⠀│⠀⠀⠀⠀├── software              │⠀⠀⠀⠀├── software    <-- Software Category (Manual DL)
     ⠀⠀⠀⠀⠀│⠀⠀⠀⠀├── tv                    │⠀⠀⠀⠀├── tv          <-- TV Series (Sonarr)
     ⠀⠀⠀⠀⠀│⠀⠀⠀⠀└── xxx                   │⠀⠀⠀⠀└── xxx         <-- Adult / XXX Category (Whisparr)
-    ⠀⠀⠀⠀⠀├── watch                  ⠀⠀⠀⠀└── watch       <-- Add .nzb and .torrent files for manual download
+    ⠀⠀⠀⠀⠀├── watch                  ⠀⠀⠀⠀└── watch       <
     ⠀⠀⠀⠀⠀│
     ⠀⠀⠀⠀⠀│    ⠀⠀⠀⠀⠀    ⠀⠀⠀⠀⠀    ⠀⠀⠀ ⠀⠀      Below Folders Only Mapped To Filebot Container
     ⠀⠀⠀⠀⠀└── filebot               ├── /filebot
